@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="3D CSS transforms와 Web Audio API로 구현한 인터랙티브 3D 주사위 굴리기 시뮬레이터">
+  <title>Premium 3D 주사위 롤러</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;800&family=Noto+Sans+KR:wght@300;400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="glass-bg"></div>
+  <div class="app-container">
+    <header class="app-header">
+      <h1>3D DICE ROLLER</h1>
+      <p class="subtitle">인터랙티브 3D 주사위 굴리기</p>
+    </header>
+
+    <main class="main-content">
+      <!-- Control Panel -->
+      <section class="control-panel glass-panel" aria-label="주사위 설정">
+        <div class="control-group">
+          <label for="dice-count">주사위 개수</label>
+          <div class="number-input-wrapper">
+            <button type="button" class="btn-step" id="btn-dec" aria-label="개수 감소">−</button>
+            <input type="number" id="dice-count" min="1" max="6" value="2" readonly>
+            <button type="button" class="btn-step" id="btn-inc" aria-label="개수 증가">+</button>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label for="dice-color">주사위 테마</label>
+          <div class="color-picker-group">
+            <button type="button" class="color-dot active" data-color="neon-blue" style="background: var(--neon-blue);" aria-label="네온 블루 테마"></button>
+            <button type="button" class="color-dot" data-color="neon-purple" style="background: var(--neon-purple);" aria-label="네온 퍼플 테마"></button>
+            <button type="button" class="color-dot" data-color="neon-pink" style="background: var(--neon-pink);" aria-label="네온 핑크 테마"></button>
+            <button type="button" class="color-dot" data-color="neon-amber" style="background: var(--neon-amber);" aria-label="네온 엠버 테마"></button>
+            <button type="button" class="color-dot" data-color="neon-emerald" style="background: var(--neon-emerald);" aria-label="네온 에메랄드 테마"></button>
+          </div>
+        </div>
+
+        <div class="control-group toggle-group">
+          <label for="sound-toggle" class="toggle-label">
+            <span>효과음</span>
+            <input type="checkbox" id="sound-toggle" checked>
+            <span class="toggle-slider"></span>
+          </label>
+        </div>
+      </section>
+
+      <!-- Dice Board -->
+      <section class="dice-board-container" id="dice-board-container" aria-label="주사위 보드">
+        <div class="dice-board" id="dice-board">
+          <!-- 3D Dice elements will be dynamically generated here -->
+        </div>
+      </section>
+
+      <!-- Action Area -->
+      <section class="action-area">
+        <button type="button" id="roll-button" class="btn-roll">
+          <span class="btn-glow"></span>
+          <span class="btn-text">주사위 굴리기</span>
+        </button>
+        <p class="hint-text">스페이스바(Space)를 눌러 굴릴 수도 있습니다</p>
+      </section>
+
+      <!-- Stats & History Grid -->
+      <div class="stats-history-grid">
+        <!-- Stats Panel -->
+        <section class="stats-panel glass-panel" aria-label="굴리기 통계">
+          <h3>통계</h3>
+          <div class="stats-grid">
+            <div class="stat-card">
+              <span class="stat-label">최근 합계</span>
+              <span class="stat-value" id="stat-sum">-</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">최근 평균</span>
+              <span class="stat-value" id="stat-avg">-</span>
+            </div>
+            <div class="stat-card">
+              <span class="stat-label">총 굴린 횟수</span>
+              <span class="stat-value" id="stat-total-rolls">0</span>
+            </div>
+          </div>
+        </section>
+
+        <!-- History Panel -->
+        <section class="history-panel glass-panel" aria-label="굴리기 기록">
+          <div class="panel-header">
+            <h3>최근 기록</h3>
+            <button type="button" id="clear-history" class="btn-clear">기록 초기화</button>
+          </div>
+          <div class="history-list-wrapper">
+            <ul class="history-list" id="history-list">
+              <li class="empty-message">아직 굴린 기록이 없습니다.</li>
+            </ul>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer class="app-footer">
+      <p>&copy; 2026 Premium 3D Dice Roller. Created with Style.</p>
+    </footer>
+  </div>
+  <script src="script.js"></script>
+</body>
+</html>
